@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard - Rojan Giri School</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+    }
+    header, nav, main, footer {
+      padding: 1rem;
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 1rem;
+    }
+    .sidebar {
+      background-color: #1a237e;
+      color: #fff;
+      height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      margin-bottom: 1rem;
+    }
+    .sidebar ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .main-content {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+    .widget {
+      background-color: #e3f2fd;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid #1a237e;
+    }
+    h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Welcome, [Student Name] - Class 10</h1>
+  </header>
+  <div class="dashboard">
+    <nav class="sidebar">
+      <h2>Student Panel</h2>
+      <ul>
+        <li><a href="#overview">Dashboard</a></li>
+        <li><a href="#timetable">Timetable</a></li>
+        <li><a href="#assignments">Assignments</a></li>
+        <li><a href="#materials">Study Materials</a></li>
+        <li><a href="#exams">Exams</a></li>
+        <li><a href="#announcements">Announcements</a></li>
+        <li><a href="#communication">Messages</a></li>
+        <li><a href="#attendance">Attendance</a></li>
+        <li><a href="#fees">Fees</a></li>
+        <li><a href="#profile">Profile</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <section id="overview" class="widget">
+        <h3>📊 Dashboard Overview</h3>
+        <p>🗓️ Today's Timetable: Math, Science, English</p>
+        <p>📝 Assignments Due: Math HW (Due Today)</p>
+        <p>📢 Latest Announcements: Exam on Friday</p>
+        <p>🎯 Upcoming Events: Annual Sports Day</p>
+        <p>📈 Attendance: 96% This Month</p>
+      </section>
+
+      <section id="timetable" class="widget">
+        <h3>🗓️ Timetable</h3>
+        <p>📅 Weekly schedule with subjects, teachers, and time.</p>
+      </section>
+
+      <section id="assignments" class="widget">
+        <h3>📝 Assignments</h3>
+        <p>📄 Math HW (Due Today)</p>
+        <p>⬆️ Upload File UI</p>
+      </section>
+
+      <section id="materials" class="widget">
+        <h3>📚 Study Materials</h3>
+        <p>📘 Notes and videos categorized by subject.</p>
+      </section>
+
+      <section id="exams" class="widget">
+        <h3>🧮 Exam & Results</h3>
+        <p>📅 Exam Schedule, 📝 Syllabus, 🏆 Marks</p>
+      </section>
+
+      <section id="announcements" class="widget">
+        <h3>📢 Announcements</h3>
+        <p>📋 Holiday on Monday. Read/acknowledge option</p>
+      </section>
+
+      <section id="communication" class="widget">
+        <h3>💬 Communication</h3>
+        <p>📬 Chat with teachers, message view area.</p>
+      </section>
+
+      <section id="attendance" class="widget">
+        <h3>📅 Attendance</h3>
+        <p>📊 Monthly summary, download option</p>
+      </section>
+
+      <section id="fees" class="widget">
+        <h3>💸 Fee Status</h3>
+        <p>✅ Paid: Rs. 2000 | ⏳ Pending: Rs. 1000</p>
+        <p>📥 Download Receipts</p>
+      </section>
+
+      <section id="profile" class="widget">
+        <h3>👤 Profile & Settings</h3>
+        <p>Name: [Student Name] | Class: 10 | ID: 1025</p>
+        <p>🔐 Change password | 🌙 Dark Mode</p>
+      </section>
+    </main>
+  </div>
+  <footer>
+    <p style="text-align:center; padding: 1rem; background: #1a237e; color: #fff;">&copy; 2025 Rojan Giri School</p>
+  </footer>
+</body>
+
+</html>

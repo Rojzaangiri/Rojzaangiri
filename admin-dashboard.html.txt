@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard - Rojan Giri School</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="dashboard-header">
+    <h1>Rojan Giri School - Admin Dashboard</h1>
+    <div class="user-info">
+      <span>Welcome, <strong id="username">Admin</strong> | Role: <strong id="user-role">ADMIN</strong></span>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="dashboard-cards">
+      <div class="card"><a href="create-notice.html">📢 Post Announcements</a></div>
+      <div class="card"><a href="admission-form.html">📝 Manage Admissions</a></div>
+      <div class="card"><a href="fees.html">💰 Manage Fees</a></div>
+      <div class="card"><a href="results.html">🎓 Publish Results</a></div>
+      <div class="card"><a href="exam-schedule.html">🗓️ Set Exam Schedule</a></div>
+      <div class="card"><a href="question-bank.html">📚 Question Bank</a></div>
+      <div class="card"><a href="attendance.html">✅ Attendance Records</a></div>
+      <div class="card"><a href="users.html">👥 Manage Users</a></div>
+      <div class="card"><a href="inbox.html">✉️ Inbox</a></div>
+    </section>
+  </main>
+
+  <footer class="dashboard-footer">
+    <p>&copy; 2025 Rojan Giri School | Admin Panel</p>
+  </footer>
+
+  <script>
+    // Check for logged-in user
+    const user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    if (!user || user.role !== 'admin') {
+      alert("Access denied. Please log in as Admin.");
+      window.location.href = 'login.html';
+    } else {
+      document.getElementById('username').textContent = user.name;
+      document.getElementById('user-role').textContent = user.role.toUpperCase();
+    }
+
+    function logout() {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

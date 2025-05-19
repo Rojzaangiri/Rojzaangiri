@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Inbox - Rojan Giri School</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 30px auto;
+    background: #f4f6f8;
+    color: #222;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  header {
+    background: #004080;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-bottom: 25px;
+  }
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+  }
+  select, input[type="text"] {
+    width: 100%;
+    max-width: 250px;
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+  }
+  .message-list {
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .message {
+    border-bottom: 1px solid #ddd;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .message:hover {
+    background-color: #e9f0ff;
+  }
+  .message:last-child {
+    border-bottom: none;
+  }
+  .msg-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #004080;
+  }
+  .msg-date {
+    font-weight: normal;
+    color: #666;
+    font-size: 0.85rem;
+  }
+  .msg-snippet {
+    margin-top: 5px;
+    color: #333;
+  }
+  .expanded-content {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #ccc;
+    color: #222;
+    font-size: 0.95rem;
+  }
+  .no-messages {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+
+<header>Inbox - Rojan Giri School</header>
+
+<label for="roleSelect">Select Your Role (for demo):</label>
+<select id="roleSelect">
+  <option value="Student">Student</option>
+  <option value="Teacher">Teacher</option>
+  <option value="Parent">Parent</option>
+  <option value="Admin">Admin</option>
+</select>
+
+<label for="searchInput">Search Messages:</label>
+<input type="text" id="searchInput" placeholder="Search by title or content..." />
+
+<div class="message-list" id="messageList">
+  <!-- Messages will appear here -->
+</div>
+
+<script>
+  const STORAGE_KEY = 'noticesData'; // Using notices as messages for demo
+  const roleSelect = document.getElementById('roleSelect');
+  const searchInput = document.getElementById('searchInput');
+  const messageList = document.getElementById('messageList');
+
+  let expandedMessageIndex = null;
+
+  // Load messages filtered by role and search
+  function renderMessages() {
+    const role = roleSelect.value;
+    const filterText = searchInput.value.toLowerCase();
+
+    let messages = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+    // Filter messages by role and search text
+    let filtered = messages.filter(msg => 
+      msg.roles.includes(role) &&
+      (msg.title.toLowerCase().includes(filterText) || msg.message.toLowerCase().includes(filterText))
+    );
+
+    messageList.innerHTML = '';
+
+    if (filtered.length === 0) {
+      messageList.innerHTML = '<div class="no-messages">No messages found.</div>';
+      return;
+    }
+
+    filtered.forEach((msg, i) => {
+      const div = document.createElement('div');
+      div.className = 'message';
+      div.innerHTML = `
+        <div class="msg-header">
+          <span>${msg.title}</span>
+          <span class="msg-date">${msg.date}</span>
+        </div>
+        <div class="msg-snippet">${msg.message.substring(0, 80)}${msg.message.length > 80 ? '...' : ''}</div>
+        ${expandedMessageIndex === i ? `<div class="expanded-content">${msg.message}</div>` : ''}
+      `;
+      div.addEventListener('click', () => {
+        expandedMessageIndex = (expandedMessageIndex === i) ? null : i;
+        renderMessages();
+      });
+      messageList.appendChild(div);
+    });
+  }
+
+  roleSelect.addEventListener('change', () => {
+    expandedMessageIndex = null;
+    renderMessages();
+  });
+
+  searchInput.addEventListener('input', () => {
+    expandedMessageIndex = null;
+    renderMessages();
+  });
+
+  // Initial render
+  renderMessages();
+</script>
+
+</body>
+</html>

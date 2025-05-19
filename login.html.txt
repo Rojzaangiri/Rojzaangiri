@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Rojan Giri School</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('images/login-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .login-container h2 {
+      margin-bottom: 25px;
+      font-weight: 700;
+      color: #2980b9;
+    }
+    .login-container select,
+    .login-container input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1.8px solid #2980b9;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    .login-container select:focus,
+    .login-container input:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 8px #3498db;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 14px;
+      background-color: #2980b9;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+    .login-container button:hover {
+      background-color: #1c5980;
+    }
+    .login-footer {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .login-footer a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+    .login-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Rojan Giri School Login</h2>
+    <form id="loginForm">
+      <select id="role" required>
+        <option value="" disabled selected>Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="teacher">Teacher</option>
+        <option value="student">Student</option>
+        <option value="parent">Parent</option>
+      </select>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your Email"
+        required
+        autocomplete="username"
+      />
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter your Password"
+        required
+        autocomplete="current-password"
+      />
+      <button type="submit">Login</button>
+    </form>
+    <div class="login-footer">
+      <p><a href="forgot-password.html">Forgot Password?</a></p>
+      <p><a href="signup.html">Register as New User</a></p>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

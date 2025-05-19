@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Submit Assignment - Rojan Giri School</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0; padding: 20px;
+      color: #333;
+    }
+    header {
+      background: #004080;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    main {
+      background: white;
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #004080;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input[type="file"], select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #004080;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #003366;
+    }
+    .message {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #dff0d8;
+      color: #3c763d;
+      border-radius: 5px;
+      display: none;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 15px;
+      color: #004080;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  Rojan Giri School - Submit Assignment
+</header>
+
+<main>
+  <h2>Submit Your Assignment</h2>
+  <form id="submit-assignment-form">
+    <label for="subject">Select Subject:</label>
+    <select id="subject" required>
+      <option value="" disabled selected>-- Choose Subject --</option>
+      <option value="Mathematics">Mathematics</option>
+      <option value="Science">Science</option>
+      <option value="English">English</option>
+      <option value="Social Studies">Social Studies</option>
+    </select>
+
+    <label for="file-upload">Upload Assignment File:</label>
+    <input type="file" id="file-upload" accept=".pdf,.doc,.docx,.ppt,.pptx,.zip,.rar,.png,.jpg,.jpeg" required />
+
+    <button type="submit">Submit Assignment</button>
+  </form>
+
+  <div class="message" id="success-message">
+    Assignment submitted successfully! Thank you.
+  </div>
+
+  <a href="assignments.html" class="back-link">← Back to Assignments</a>
+</main>
+
+<script>
+  const form = document.getElementById('submit-assignment-form');
+  const successMessage = document.getElementById('success-message');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Simulate upload delay
+    setTimeout(() => {
+      form.reset();
+      successMessage.style.display = 'block';
+    }, 500);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Attendance Management</title>
+<style>
+  body {
+    font-family: 'Nunito', sans-serif;
+    margin: 20px; background: #f0f4f8; color: #34495e;
+  }
+  h1, h2 {
+    text-align: center; color: #2980b9;
+  }
+  .controls {
+    max-width: 900px; margin: 0 auto 20px auto;
+    display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  }
+  button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 2px solid #2980b9;
+    background: white;
+    color: #2980b9;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  button.active {
+    background-color: #2980b9;
+    color: white;
+  }
+  button.add-btn {
+    background-color: #27ae60;
+    color: white;
+    border-color: #27ae60;
+  }
+  button.add-btn:hover {
+    background-color: #219150;
+  }
+  .section {
+    max-width: 1000px;
+    margin: 0 auto 40px auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+    padding: 20px;
+    overflow-x: auto;
+  }
+  label {
+    margin-left: 10px;
+    font-weight: 600;
+  }
+  input[type="date"] {
+    margin-left: 10px;
+    padding: 6px 10px;
+    font-size: 1rem;
+  }
+  select {
+    padding: 6px 10px;
+    font-size: 1rem;
+    margin-left: 10px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    min-width: 700px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px 5px;
+    font-size: 0.85rem;
+  }
+  th {
+    background: #2980b9;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  td.status {
+    cursor: pointer;
+    user-select: none;
+  }
+  td.status.present {
+    background-color: #d4edda;
+    color: #155724;
+    font-weight: 700;
+  }
+  td.status.absent {
+    background-color: #f8d7da;
+    color: #721c24;
+    font-weight: 700;
+  }
+  td.status.leave {
+    background-color: #fff3cd;
+    color: #856404;
+    font-weight: 700;
+  }
+  td.status.disabled {
+    background-color: #eee;
+    color: #aaa;
+    cursor: not-allowed;
+  }
+  .legend {
+    max-width: 1000px;
+    margin: 10px auto;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .legend span {
+    margin-right: 15px;
+    padding: 2px 6px;
+  }
+  /* Modal styles */
+  .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 10; 
+    padding-top: 60px; 
+    left: 0; top: 0;
+    width: 100%; height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0,0.4);
+  }
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 320px;
+    box-shadow: 0 5px 15px rgb(0 0 0 / 0.3);
+    position: relative;
+  }
+  .close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 10px; top: 5px;
+  }
+  .close-btn:hover,
+  .close-btn:focus {
+    color: #000;
+  }
+  .modal-content input, .modal-content select {
+    width: 100%;
+    padding: 8px 6px;
+    margin: 10px 0 20px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+  }
+  .modal-content button.submit-btn {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+  }
+  .modal-content button.submit-btn:hover {
+    background-color: #216ba5;
+  }
+  @media (max-width: 600px) {
+    .controls, .section {
+      max-width: 100%;
+      margin: 10px;
+    }
+    table {
+      min-width: auto;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>Attendance Management</h1>
+
+<div class="controls">
+  <button id="btnStudents" class="active">Students Attendance</button>
+  <button id="btnTeachers">Teachers Attendance</button>
+</div>
+
+<!-- Add buttons -->
+<div class="controls" style="justify-content:center; margin-bottom: 30px;">
+  <button id="addStudentBtn" class="add-btn" title="Add New Student">+ Add Student</button>
+  <button id="addTeacherBtn" class="add-btn" title="Add New Teacher">+ Add Teacher</button>
+</div>
+
+<!-- Students Section -->
+<div id="studentSection" class="section">
+  <div>
+    <label for="classSelect">Select Class:</label>
+    <select id="classSelect"></select>
+
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" />
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" />
+  </div>
+
+  <h2>Students Attendance</h2>
+  <table id="studentsTable">
+    <thead id="studentsHead"></thead>
+    <tbody id="studentsBody"></tbody>
+  </table>
+</div>
+
+<!-- Teachers Section -->
+<div id="teacherSection" class="section" style="display:none;">
+  <div>
+    <label for="startDateTeacher">Start Date:</label>
+    <input type="date" id="startDateTeacher" />
+
+    <label for="endDateTeacher">End Date:</label>
+    <input type="date" id="endDateTeacher" />
+  </div>
+
+  <h2>Teachers Attendance</h2>
+  <table id="teachersTable">
+    <thead id="teachersHead"></thead>
+    <tbody id="teachersBody"></tbody>
+  </table>
+</div>
+
+<div class="legend">
+  <strong>Legend:</strong>
+  <span style="background:#d4edda;">Present</span>
+  <span style="background:#f8d7da;">Absent</span>
+  <span style="background:#fff3cd;">Leave</span>
+  <span style="background:#eee;">No Edit</span>
+</div>
+
+<!-- Modal for adding student -->
+<div id="addStudentModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeStudentModal">&times;</span>
+    <h3>Add New Student</h3>
+    <form id="studentForm">
+      <label for="studentName">Student Name</label>
+      <input type="text" id="studentName" required placeholder="Enter student name" />
+      
+      <label for="studentClass">Class</label>
+      <select id="studentClass" required></select>
+      
+      <button type="submit" class="submit-btn">Add Student</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal for adding teacher -->
+<div id="addTeacherModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeTeacherModal">&times;</span>
+    <h3>Add New Teacher</h3>
+    <form id="teacherForm">
+      <label for="teacherName">Teacher Name</label>
+      <input type="text" id="teacherName" required placeholder="Enter teacher name" />
+      
+      <button type="submit" class="submit-btn">Add Teacher</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Basic role check (admin can edit both students and teachers, teacher can only view teachers attendance as read-only)
+  const role = 'admin'; // 'teacher' or 'admin'
+
+  // Initial classes
+  let classes = ['Class 1', 'Class 2', 'Class 3'];
+
+  // People list (students and teachers)
+  let people = [
+    { id: 1, name: "Rojan Giri", role: "student", class: 'Class 1' },
+    { id: 2, name: "Sita Sharma", role: "student", class:
+
+
+
+
+
+ChatGPT said:
+'Class 2' },
+{ id: 3, name: "Binod Rai", role: "student", class: 'Class 3' },
+{ id: 4, name: "Mina Karki", role: "teacher" },
+{ id: 5, name: "Hari Thapa", role: "teacher" }
+];
+
+// Attendance records: key = ${personId}_${yyyy-mm-dd}, value = status ('present','absent','leave')
+let attendanceRecords = {
+// example for student id 1 on 2025-05-01
+'1_2025-05-01': 'present',
+'1_2025-05-02': 'absent',
+'4_2025-05-01': 'present',
+};
+
+// Status cycling order
+const STATUS = ['present', 'absent', 'leave'];
+
+// Helper to format date YYYY-MM-DD
+function formatDate(d) {
+return d.toISOString().split('T')[0];
+}
+
+// Generate array of dates between two dates inclusive (max 365 days)
+function dateRange(start, end) {
+const dates = [];
+const curr = new Date(start);
+const last = new Date(end);
+while(curr <= last) {
+dates.push(new Date(curr));
+curr.setDate(curr.getDate() + 1);
+if(dates.length > 365) break; // safety cap
+}
+return dates;
+}
+
+// Fill class select dropdowns
+function fillClasses() {
+const select = document.getElementById('classSelect');
+const studentClassSelect = document.getElementById('studentClass');
+select.innerHTML = '';
+studentClassSelect.innerHTML = '';
+
+javascript
+Copy
+Edit
+classes.forEach(c => {
+  const option1 = document.createElement('option');
+  option1.value = c;
+  option1.textContent = c;
+  select.appendChild(option1);
+
+  const option2 = document.createElement('option');
+  option2.value = c;
+  option2.textContent = c;
+  studentClassSelect.appendChild(option2);
+});
+}
+
+// Create table header for given dates array
+function createTableHeader(thead, dates) {
+thead.innerHTML = '';
+const tr = document.createElement('tr');
+tr.appendChild(document.createElement('th')); // Empty first cell for names
+
+javascript
+Copy
+Edit
+dates.forEach(date => {
+  const th = document.createElement('th');
+  th.textContent = date.toISOString().slice(5, 10); // MM-DD
+  tr.appendChild(th);
+});
+
+const thPercent = document.createElement('th');
+thPercent.textContent = '% Present';
+tr.appendChild(thPercent);
+
+thead.appendChild(tr);
+}
+
+// Calculate attendance percentage for person over given dates
+function calculatePresentPercent(personId, dates) {
+if(dates.length === 0) return 'N/A';
+let presentCount = 0;
+let totalCount = dates.length;
+for(const d of dates) {
+const key = ${personId}_${formatDate(d)};
+if(attendanceRecords[key] === 'present') {
+presentCount++;
+}
+}
+return ((presentCount / totalCount) * 100).toFixed(1) + '%';
+}
+
+// Render attendance table body
+function renderTableBody(tbody, persons, dates, isTeachersTable = false) {
+tbody.innerHTML = '';
+persons.forEach(person => {
+const tr = document.createElement('tr');
+const nameTd = document.createElement('td');
+nameTd.textContent = person.name + (person.role === 'student' ? (${person.class}) : '');
+nameTd.style.fontWeight = '600';
+tr.appendChild(nameTd);
+
+javascript
+Copy
+Edit
+  dates.forEach(date => {
+    const td = document.createElement('td');
+    td.classList.add('status');
+    const key = `${person.id}_${formatDate(date)}`;
+    const status = attendanceRecords[key] || 'present';
+
+    td.textContent = status.charAt(0).toUpperCase();
+    td.classList.add(status);
+
+    if (isTeachersTable && role === 'teacher') {
+      // Teacher role cannot edit teacher attendance
+      td.classList.add('disabled');
+      td.title = "Teachers' attendance editable by Admin only";
+      td.style.cursor = 'not-allowed';
+    } else {
+      td.title = `Click to change status for ${formatDate(date)}`;
+      td.style.cursor = 'pointer';
+      td.addEventListener('click', () => {
+        let currIndex = STATUS.indexOf(attendanceRecords[key] || 'present');
+        currIndex = (currIndex + 1) % STATUS.length;
+        attendanceRecords[key] = STATUS[currIndex];
+        td.textContent = STATUS[currIndex].charAt(0).toUpperCase();
+
+        td.classList.remove('present', 'absent', 'leave');
+        td.classList.add(STATUS[currIndex]);
+
+        tr.lastChild.textContent = calculatePresentPercent(person.id, dates);
+      });
+    }
+    tr.appendChild(td);
+  });
+
+  const percentTd = document.createElement('td');
+  percentTd.textContent = calculatePresentPercent(person.id, dates);
+  tr.appendChild(percentTd);
+  tbody.appendChild(tr);
+});
+}
+
+// Update students table display based on selections
+function updateStudentsTable() {
+const selectedClass = document.getElementById('classSelect').value;
+const startDate = document.getElementById('startDate').value;
+const endDate = document.getElementById('endDate').value;
+
+pgsql
+Copy
+Edit
+if (!startDate || !endDate) return; // wait for both dates
+
+const start = new Date(startDate);
+const end = new Date(endDate);
+if (start > end) {
+  alert("Start date cannot be after end date.");
+  return;
+}
+
+// Limit to 365 days
+const dates = dateRange(start, end);
+
+const studentsInClass = people.filter(p => p.role === 'student' && p.class === selectedClass);
+const head = document.getElementById('studentsHead');
+const body = document.getElementById('studentsBody');
+
+createTableHeader(head, dates);
+renderTableBody(body, studentsInClass, dates, false);
+}
+
+// Update teachers table display based on selections
+function updateTeachersTable() {
+const startDate = document.getElementById('startDateTeacher').value;
+const endDate = document.getElementById('endDateTeacher').value;
+
+javascript
+Copy
+Edit
+if (!startDate || !endDate) return;
+
+const start = new Date(startDate);
+const end = new Date(endDate);
+if (start > end) {
+  alert("Start date cannot be after end date.");
+  return;
+}
+
+const dates = dateRange(start, end);
+
+const teachers = people.filter(p => p.role === 'teacher');
+const head = document.getElementById('teachersHead');
+const body = document.getElementById('teachersBody');
+
+createTableHeader(head, dates);
+renderTableBody(body, teachers, dates, true);
+}
+
+// Toggle between student and teacher section
+const btnStudents = document.getElementById('btnStudents');
+const btnTeachers = document.getElementById('btnTeachers');
+const studentSection = document.getElementById('studentSection');
+const teacherSection = document.getElementById('teacherSection');
+
+btnStudents.addEventListener('click', () => {
+btnStudents.classList.add('active');
+btnTeachers.classList.remove('active');
+studentSection.style.display = 'block';
+teacherSection.style.display = 'none';
+});
+
+btnTeachers.addEventListener('click', () => {
+btnTeachers.classList.add('active');
+btnStudents.classList.remove('active');
+studentSection.style.display = 'none';
+teacherSection.style.display = 'block';
+});
+
+// Fill classes dropdowns
+fillClasses();
+
+// Set default date ranges for both sections (past 30 days)
+const today = new Date();
+const prior30 = new Date();
+prior30.setDate(today.getDate() - 29);
+
+document.getElementById('startDate').value = formatDate(prior30);
+document.getElementById('endDate').value = formatDate(today);
+
+document.getElementById('startDateTeacher').value = formatDate(prior30);
+document.getElementById('endDateTeacher').value = formatDate(today);
+
+// Update tables when selectors change
+document.getElementById('classSelect').addEventListener('change', updateStudentsTable);
+document.getElementById('startDate').addEventListener('change', updateStudentsTable);
+document.getElementById('endDate').addEventListener('change', updateStudentsTable);
+
+document.getElementById('startDateTeacher').addEventListener('change', updateTeachersTable);
+document.getElementById('endDateTeacher').addEventListener('change', updateTeachersTable);
+
+// Initial table render
+updateStudentsTable();
+
+// Add student modal logic
+const addStudentBtn = document.getElementById('addStudentBtn');
+const addStudentModal = document.getElementById('addStudentModal');
+const closeStudentModal = document.getElementById('closeStudentModal');
+const studentForm = document.getElementById('studentForm');
+
+addStudentBtn.addEventListener('click', () => {
+addStudentModal.style.display = 'block';
+});
+closeStudentModal.addEventListener('click', () => {
+addStudentModal.style.display = 'none';
+studentForm.reset();
+});
+window.addEventListener('click', (e) => {
+if (e.target === addStudentModal) {
+addStudentModal.style.display = 'none';
+studentForm.reset();
+}
+});
+
+studentForm.addEventListener('submit', e => {
+e.preventDefault();
+const name = document.getElementById('studentName').value.trim();
+const cls = document.getElementById('studentClass').value;
+if (!name || !cls) return;
+
+pgsql
+Copy
+Edit
+// Create new student with unique id
+const newId = people.reduce((max, p) => Math.max(max, p.id), 0) + 1;
+people.push({ id: newId, name, role: 'student', class: cls });
+
+alert(`Added student: ${name} (${cls})`);
+addStudentModal.style.display = 'none';
+studentForm.reset();
+fillClasses(); // refresh class dropdowns
+updateStudentsTable();
+});
+
+// Add teacher modal logic
+const addTeacherBtn = document.getElementById('addTeacherBtn');
+const addTeacherModal = document.getElementById('addTeacherModal');
+const closeTeacherModal = document.getElementById('closeTeacherModal');
+const teacherForm = document.getElementById('teacherForm');
+
+addTeacherBtn.addEventListener('click', () => {
+addTeacherModal.style.display = 'block';
+});
+closeTeacherModal.addEventListener('click', () => {
+addTeacherModal.style.display = 'none';
+teacherForm.reset();
+});
+window.addEventListener('click', (e) => {
+if (e.target === addTeacherModal) {
+addTeacherModal.style.display = 'none';
+teacherForm.reset();
+}
+});
+
+teacherForm.addEventListener('submit', e => {
+e.preventDefault();
+const name = document.getElementById('teacherName').value.trim();
+if (!name) return;
+
+javascript
+Copy
+Edit
+const newId = people.reduce((max, p) => Math.max(max, p.id), 0) + 1;
+people.push({ id: newId, name, role: 'teacher' });
+
+alert(`Added teacher: ${name}`);
+addTeacherModal.style.display = 'none';
+teacherForm.reset();
+updateTeachersTable();
+});
+
+// Initial teacher table render
+updateTeachersTable();
+
+</script> </body> </html>

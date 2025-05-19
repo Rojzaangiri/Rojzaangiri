@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Dashboard | Rojan Giri School</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <header class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
+    <h1 class="m-0">Rojan Giri School</h1>
+    <span>Welcome, Mr./Ms. [Teacher Name]</span>
+  </header>
+
+  <div class="container mt-4">
+    <section class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Today's Schedule</h5>
+            <ul>
+              <li>9:00 AM - Math - Class 5</li>
+              <li>11:00 AM - Science - Class 6</li>
+              <li>1:00 PM - Computer - Class 8</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Assignments to Grade</h5>
+            <ul>
+              <li>Class 6 Science - 10 submissions</li>
+              <li>Class 5 Math - 8 submissions</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Announcements</h5>
+            <p>Parent-Teacher meeting on Friday.</p>
+            <p>School picnic scheduled for next Saturday.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-4">
+      <h3>Class & Subject Management</h3>
+      <p>Assigned Classes: Class 5, Class 6, Class 8</p>
+      <button class="btn btn-secondary">View Students</button>
+      <button class="btn btn-primary">Manage Subjects</button>
+    </section>
+
+    <section class="mt-4">
+      <h3>Assignments</h3>
+      <button class="btn btn-success">Create New Assignment</button>
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th>Class</th><th>Subject</th><th>Due Date</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>5</td><td>Math</td><td>2025-05-25</td><td>Pending</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="mt-4">
+      <h3>Grading & Exams</h3>
+      <button class="btn btn-warning">Enter Grades</button>
+      <button class="btn btn-info">Student Analytics</button>
+    </section>
+
+    <section class="mt-4">
+      <h3>Attendance Management</h3>
+      <button class="btn btn-dark">Mark Attendance</button>
+      <button class="btn btn-secondary">View Records</button>
+    </section>
+
+    <section class="mt-4">
+      <h3>Resources & Notes Upload</h3>
+      <form>
+        <input type="file" />
+        <input type="text" placeholder="Subject" class="form-control my-2" />
+        <button class="btn btn-primary">Upload</button>
+      </form>
+    </section>
+
+    <section class="mt-4">
+      <h3>Profile & Settings</h3>
+      <button class="btn btn-outline-secondary">Edit Profile</button>
+      <button class="btn btn-outline-danger">Change Password</button>
+    </section>
+  </div>
+
+  <footer class="text-center mt-4 p-3 bg-light">
+    <p>&copy; 2025 Rojan Giri School | All Rights Reserved</p>
+  </footer>
+</body>
+</html>

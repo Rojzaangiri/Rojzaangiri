@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Manage Subjects - Admin Panel</title>
+<style>
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #f7f9fb;
+    margin: 0; padding: 20px;
+    color: #34495e;
+  }
+  h1 {
+    text-align: center;
+    color: #e67e22;
+    margin-bottom: 20px;
+  }
+  table {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background: #e67e22;
+    color: white;
+  }
+  td.actions {
+    text-align: right;
+  }
+  button {
+    background: #e67e22;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    margin-left: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #d66f1c;
+  }
+  form {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  form label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  form input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1.8px solid #dcdfe3;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+  form button {
+    width: 100%;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  input.editable {
+    border: 1px solid #e67e22;
+    border-radius: 4px;
+    padding: 6px 8px;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+  <h1>Admin: Manage Subjects</h1>
+
+  <table id="subjectsTable">
+    <thead>
+      <tr>
+        <th>Subject Name</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Subjects will appear here -->
+    </tbody>
+  </table>
+
+  <form id="addSubjectForm">
+    <label for="newSubject">Add New Subject</label>
+    <input type="text" id="newSubject" placeholder="Enter subject name" required />
+    <button type="submit">Add Subject</button>
+  </form>
+
+<script>
+  const subjectsTableBody = document.querySelector('#subjectsTable tbody');
+  const addSubjectForm = document.getElementById('addSubjectForm');
+  const newSubjectInput = document.getElementById('newSubject');
+
+  // Sample initial subjects (can be empty or loaded from backend)
+  let subjects = [
+    "Mathematics",
+    "English",
+    "Science",
+    "Nepali",
+    "Social Studies",
+    "Computer",
+    "Art",
+  ];
+
+  // Function to render the subjects table
+  function renderSubjects() {
+    subjectsTableBody.innerHTML = '';
+    subjects.forEach((subject, index) => {
+      const row = document.createElement('tr');
+
+      // Subject name cell with inline edit capability
+      const nameCell = document.createElement('td');
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.value = subject;
+      nameInput.className = 'editable';
+      nameInput.dataset.index = index;
+      nameInput.addEventListener('change', (e) => {
+        const i = e.target.dataset.index;
+        subjects[i] = e.target.value.trim() || subjects[i];
+        renderSubjects();
+      });
+      nameCell.appendChild(nameInput);
+
+      // Actions cell with delete button
+      const actionsCell = document.createElement('td');
+      actionsCell.className = 'actions';
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.addEventListener('click', () => {
+        if(confirm(`Delete subject "${subject}"?`)) {
+          subjects.splice(index, 1);
+          renderSubjects();
+        }
+      });
+      actionsCell.appendChild(deleteBtn);
+
+      row.appendChild(nameCell);
+      row.appendChild(actionsCell);
+
+      subjectsTableBody.appendChild(row);
+    });
+  }
+
+  // Add subject form submit handler
+  addSubjectForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const newSubj = newSubjectInput.value.trim();
+    if(newSubj && !subjects.includes(newSubj)) {
+      subjects.push(newSubj);
+      newSubjectInput.value = '';
+      renderSubjects();
+    } else {
+      alert('Please enter a unique subject name.');
+    }
+  });
+
+  // Initial render
+  renderSubjects();
+</script>
+
+</body>
+</html>

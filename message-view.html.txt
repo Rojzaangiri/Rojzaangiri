@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>View Message - Rojan Giri School</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: 40px auto;
+    background: #f9fafb;
+    padding: 30px;
+    border-radius: 8px;
+    color: #222;
+  }
+  header {
+    background: #004080;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-bottom: 30px;
+  }
+  .message-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #004080;
+  }
+  .message-date {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .message-content {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+  .back-link {
+    display: inline-block;
+    margin-top: 25px;
+    text-decoration: none;
+    color: #004080;
+    font-weight: 600;
+    border: 1px solid #004080;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .back-link:hover {
+    background-color: #004080;
+    color: white;
+  }
+</style>
+</head>
+<body>
+
+<header>Message Details - Rojan Giri School</header>
+
+<div id="messageContainer">
+  <div class="message-title" id="msgTitle">Loading...</div>
+  <div class="message-date" id="msgDate"></div>
+  <div class="message-content" id="msgContent"></div>
+</div>
+
+<a href="inbox.html" class="back-link">&larr; Back to Inbox</a>
+
+<script>
+  // The message data will be passed as URL query params (e.g., ?index=0)
+  // For demo, we get the index param and fetch message from localStorage
+
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  const STORAGE_KEY = 'noticesData';
+  const msgTitleEl = document.getElementById('msgTitle');
+  const msgDateEl = document.getElementById('msgDate');
+  const msgContentEl = document.getElementById('msgContent');
+
+  function loadMessage() {
+    const indexStr = getQueryParam('index');
+    if (indexStr === null) {
+      msgTitleEl.textContent = "No message selected.";
+      return;
+    }
+
+    const index = parseInt(indexStr);
+    if (isNaN(index)) {
+      msgTitleEl.textContent = "Invalid message.";
+      return;
+    }
+
+    const allMessages = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+    if (index < 0 || index >= allMessages.length) {
+      msgTitleEl.textContent = "Message not found.";
+      return;
+    }
+
+    const message = allMessages[index];
+    msgTitleEl.textContent = message.title;
+    msgDateEl.textContent = `Date: ${message.date}`;
+    msgContentEl.textContent = message.message;
+  }
+
+  loadMessage();
+</script>
+
+</body>
+</html>

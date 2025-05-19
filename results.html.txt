@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manage Results - Rojan Giri School Admin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0; padding: 20px;
+      color: #333;
+    }
+    header {
+      background: #004080;
+      color: white;
+      padding: 15px 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+    }
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #004080;
+    }
+    form > * {
+      margin-bottom: 12px;
+      display: block;
+      width: 100%;
+    }
+    input, select {
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #004080;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #003366;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #e6f0ff;
+    }
+    td > input {
+      width: 95%;
+      padding: 5px;
+      border: 1px solid #aaa;
+      border-radius: 3px;
+    }
+    .action-btn {
+      background-color: #d9534f;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .action-btn:hover {
+      background-color: #c9302c;
+    }
+  </style>
+</head>
+<body>
+
+<header>Rojan Giri School - Admin Results Management</header>
+
+<main>
+  <h2>Manage Exam Results</h2>
+
+  <form id="results-form">
+    <input type="text" id="student-name" placeholder="Student Name" required />
+    
+    <select id="subject" required>
+      <option value="" disabled selected>Select Subject</option>
+      <option>Mathematics</option>
+      <option>Science</option>
+      <option>English</option>
+      <option>Social Studies</option>
+    </select>
+
+    <input type="text" id="exam-name" placeholder="Exam Name (e.g., Midterm, Final)" required />
+    
+    <input type="number" id="marks" placeholder="Marks Obtained" min="0" max="100" required />
+
+    <button type="submit">Add Result</button>
+  </form>
+
+  <table id="results-table" aria-label="Exam results table">
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Subject</th>
+        <th>Exam</th>
+        <th>Marks</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Result rows will be here -->
+    </tbody>
+  </table>
+</main>
+
+<script>
+  const form = document.getElementById('results-form');
+  const tableBody = document.querySelector('#results-table tbody');
+
+  // Load saved results or empty array
+  let results = JSON.parse(localStorage.getItem('examResults')) || [];
+
+  function saveResults() {
+    localStorage.setItem('examResults', JSON.stringify(results));
+  }
+
+  function renderTable() {
+    tableBody.innerHTML = '';
+    results.forEach((result, index) => {
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td><input type="text" value="${result.studentName}" data-index="${index}" data-field="studentName" /></td>
+        <td>
+          <select data-index="${index}" data-field="subject">
+            <option value="Mathematics" ${result.subject === 'Mathematics' ? 'selected' : ''}>Mathematics</option>
+            <option value="Science" ${result.subject === 'Science' ? 'selected' : ''}>Science</option>
+            <option value="English" ${result.subject === 'English' ? 'selected' : ''}>English</option>
+            <option value="Social Studies" ${result.subject === 'Social Studies' ? 'selected' : ''}>Social Studies</option>
+          </select>
+        </td>
+        <td><input type="text" value="${result.examName}" data-index="${index}" data-field="examName" /></td>
+        <td><input type="number" value="${result.marks}" min="0" max="100" data-index="${index}" data-field="marks" /></td>
+        <td><button class="action-btn" data-index="${index}">Delete</button></td>
+      `;
+
+      tableBody.appendChild(tr);
+    });
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const studentName = document.getElementById('student-name').value.trim();
+    const subject = document.getElementById('subject').value;
+    const examName = document.getElementById('exam-name').value.trim();
+    const marks = parseInt(document.getElementById('marks').value, 10);
+
+    if (!studentName || !subject || !examName || isNaN(marks)) return;
+
+    results.push({ studentName, subject, examName, marks });
+    saveResults();
+    renderTable();
+    form.reset();
+  });
+
+  tableBody.addEventListener('input', e => {
+    const target = e.target;
+    const index = target.getAttribute('data-index');
+    const field = target.getAttribute('data-field');
+    if (index === null || field === null) return;
+
+    let value = target.value;
+    if (field === 'marks') {
+      value = parseInt(value, 10);
+      if (isNaN(value) || value < 0) value = 0;
+      if (value > 100) value = 100;
+      target.value = value;
+    }
+    results[index][field] = value;
+    saveResults();
+  });
+
+  tableBody.addEventListener('click', e => {
+    if (e.target.classList.contains('action-btn')) {
+      const index = e.target.getAttribute('data-index');
+      results.splice(index, 1);
+      saveResults();
+      renderTable();
+    }
+  });
+
+  // Initial render
+  renderTable();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Assignments - Rojan Giri School</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      color: #004080;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #004080;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .status {
+      padding: 5px 10px;
+      border-radius: 4px;
+      color: white;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+    .status.pending { background-color: #f0ad4e; }
+    .status.submitted { background-color: #5cb85c; }
+    .status.overdue { background-color: #d9534f; }
+    .btn {
+      background-color: #004080;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+    .btn:hover {
+      background-color: #003366;
+    }
+    .upload-form {
+      margin-top: 20px;
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input[type="file"], input[type="text"], select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Assignments</h1>
+
+  <!-- Assignment List -->
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Subject</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="assignment-list">
+      <tr>
+        <td>Math Homework 1</td>
+        <td>Mathematics</td>
+        <td>2025-06-01</td>
+        <td><span class="status pending">Pending</span></td>
+        <td><button class="btn" onclick="submitAssignment('Math Homework 1')">Submit</button></td>
+      </tr>
+      <tr>
+        <td>Science Project</td>
+        <td>Science</td>
+        <td>2025-05-20</td>
+        <td><span class="status submitted">Submitted</span></td>
+        <td><button class="btn" disabled>Submitted</button></td>
+      </tr>
+      <tr>
+        <td>English Essay</td>
+        <td>English</td>
+        <td>2025-05-15</td>
+        <td><span class="status overdue">Overdue</span></td>
+        <td><button class="btn" disabled>Late</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Upload Form (simulate student upload or teacher assignment upload) -->
+  <div class="upload-form" id="upload-section" style="display:none;">
+    <h2 id="upload-title">Submit Assignment</h2>
+    <form id="assignment-upload-form">
+      <label for="file-upload">Choose file to upload:</label>
+      <input type="file" id="file-upload" required />
+      <button type="submit" class="btn">Upload</button>
+      <button type="button" class="btn" style="background:#d9534f; margin-left: 10px;" onclick="closeUpload()">Cancel</button>
+    </form>
+  </div>
+
+  <script>
+    // Simulate opening upload form
+    function submitAssignment(title) {
+      document.getElementById('upload-title').innerText = `Submit Assignment: ${title}`;
+      document.getElementById('upload-section').style.display = 'block';
+    }
+
+    function closeUpload() {
+      document.getElementById('upload-section').style.display = 'none';
+    }
+
+    // Handle form submit (simulation only)
+    document.getElementById('assignment-upload-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      alert('Assignment uploaded successfully! (Simulation)');
+      closeUpload();
+    });
+  </script>
+
+</body>
+</html>

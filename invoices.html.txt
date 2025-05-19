@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Invoices - Rojan Giri School</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 20px auto;
+    background: #f9fafb;
+    color: #333;
+  }
+  header {
+    background: #004080;
+    color: white;
+    padding: 15px 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+  }
+  h2 {
+    margin-top: 20px;
+    color: #004080;
+  }
+  .search-box {
+    margin-bottom: 20px;
+  }
+  .search-box input {
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 7px rgba(0,0,0,0.1);
+  }
+  th, td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background: #004080;
+    color: white;
+  }
+  tr:hover {
+    background: #f1f9ff;
+  }
+  .action-btn {
+    margin-right: 5px;
+    background: #007bff;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .delete-btn {
+    background: #d9534f;
+  }
+  .action-btn:hover {
+    opacity: 0.9;
+  }
+  .no-data {
+    text-align: center;
+    padding: 15px;
+    color: #666;
+  }
+  .status-paid {
+    color: green;
+    font-weight: bold;
+  }
+  .status-unpaid {
+    color: red;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<header>Rojan Giri School - Invoice Management</header>
+
+<h2>Search Invoices</h2>
+<div class="search-box">
+  <input type="text" id="search-input" placeholder="Search by student name or invoice number..." />
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Invoice No.</th>
+      <th>Student Name</th>
+      <th>Student ID</th>
+      <th>Date</th>
+      <th>Amount (Rs.)</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="invoice-body">
+    <!-- Invoice rows inserted here -->
+  </tbody>
+</table>
+
+<script>
+  const STORAGE_KEY = 'invoicesData';
+
+  let invoices = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+  const invoiceBody = document.getElementById('invoice-body');
+  const searchInput = document.getElementById('search-input');
+
+  function renderInvoices(filterText = '') {
+    invoiceBody.innerHTML = '';
+
+    const filtered = invoices.filter(invoice => {
+      const nameMatch = invoice.studentName.toLowerCase().includes(filterText.toLowerCase());
+      const invoiceMatch = invoice.invoiceNo.toLowerCase().includes(filterText.toLowerCase());
+      return nameMatch || invoiceMatch;
+    });
+
+    if (filtered.length === 0) {
+      invoiceBody.innerHTML = `<tr><td colspan="7" class="no-data">No invoices found.</td></tr>`;
+      return;
+    }
+
+    filtered.forEach((inv, idx) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${inv.invoiceNo}</td>
+        <td>${inv.studentName}</td>
+        <td>${inv.studentId}</td>
+        <td>${inv.date}</td>
+        <td>Rs. ${inv.amount.toFixed(2)}</td>
+        <td class="${inv.status === 'Paid' ? 'status-paid' : 'status-unpaid'}">${inv.status}</td>
+        <td>
+          <button class="action-btn" onclick="toggleStatus(${idx})">${inv.status === 'Paid' ? 'Mark Unpaid' : 'Mark Paid'}</button>
+          <button class="action-btn delete-btn" onclick="deleteInvoice(${idx})">Delete</button>
+        </td>
+      `;
+      invoiceBody.appendChild(tr);
+    });
+  }
+
+  function toggleStatus(index) {
+    invoices[index].status = invoices[index].status === 'Paid' ? 'Unpaid' : 'Paid';
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(invoices));
+    renderInvoices(searchInput.value);
+  }
+
+  function deleteInvoice(index) {
+    if (confirm('Delete this invoice?')) {
+      invoices.splice(index, 1);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(invoices));
+      renderInvoices(searchInput.value);
+    }
+  }
+
+  searchInput.addEventListener('input', () => {
+    renderInvoices(searchInput.value);
+  });
+
+  renderInvoices();
+
+  window.toggleStatus = toggleStatus;
+  window.deleteInvoice = deleteInvoice;
+</script>
+
+</body>
+</html>

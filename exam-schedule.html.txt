@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exam Schedule - Rojan Giri School Admin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0; padding: 20px;
+      color: #333;
+    }
+    header {
+      background: #004080;
+      color: white;
+      padding: 15px 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+    }
+    main {
+      max-width: 700px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #004080;
+    }
+    form > * {
+      margin-bottom: 12px;
+      display: block;
+      width: 100%;
+    }
+    input, select {
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #004080;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #003366;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #e6f0ff;
+    }
+    td > input {
+      width: 95%;
+      padding: 5px;
+      border: 1px solid #aaa;
+      border-radius: 3px;
+    }
+    .action-btn {
+      background-color: #d9534f;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .action-btn:hover {
+      background-color: #c9302c;
+    }
+  </style>
+</head>
+<body>
+
+<header>Rojan Giri School - Admin Exam Schedule</header>
+
+<main>
+  <h2>Manage Exam Schedule</h2>
+
+  <form id="exam-form">
+    <select id="subject" required>
+      <option value="" disabled selected>Select Subject</option>
+      <option value="Mathematics">Mathematics</option>
+      <option value="Science">Science</option>
+      <option value="English">English</option>
+      <option value="Social Studies">Social Studies</option>
+    </select>
+
+    <input type="date" id="exam-date" required />
+    <input type="time" id="start-time" required placeholder="Start Time" />
+    <input type="time" id="end-time" required placeholder="End Time" />
+
+    <button type="submit">Add Exam</button>
+  </form>
+
+  <table id="exam-table" aria-label="Exam schedule table">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Exam rows go here -->
+    </tbody>
+  </table>
+</main>
+
+<script>
+  const form = document.getElementById('exam-form');
+  const tableBody = document.querySelector('#exam-table tbody');
+
+  // Load exams from localStorage or empty array
+  let exams = JSON.parse(localStorage.getItem('examSchedule')) || [];
+
+  function saveExams() {
+    localStorage.setItem('examSchedule', JSON.stringify(exams));
+  }
+
+  function renderTable() {
+    tableBody.innerHTML = '';
+    exams.forEach((exam, index) => {
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td><input type="text" value="${exam.subject}" data-index="${index}" data-field="subject" /></td>
+        <td><input type="date" value="${exam.date}" data-index="${index}" data-field="date" /></td>
+        <td><input type="time" value="${exam.start}" data-index="${index}" data-field="start" /></td>
+        <td><input type="time" value="${exam.end}" data-index="${index}" data-field="end" /></td>
+        <td><button class="action-btn" data-index="${index}">Delete</button></td>
+      `;
+
+      tableBody.appendChild(tr);
+    });
+  }
+
+  function updateExam(index, field, value) {
+    exams[index][field] = value;
+    saveExams();
+    renderTable();
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const subject = document.getElementById('subject').value;
+    const date = document.getElementById('exam-date').value;
+    const start = document.getElementById('start-time').value;
+    const end = document.getElementById('end-time').value;
+
+    exams.push({ subject, date, start, end });
+    saveExams();
+    renderTable();
+
+    form.reset();
+  });
+
+  tableBody.addEventListener('input', e => {
+    if (e.target.tagName === 'INPUT') {
+      const index = e.target.getAttribute('data-index');
+      const field = e.target.getAttribute('data-field');
+      const value = e.target.value;
+      updateExam(index, field, value);
+    }
+  });
+
+  tableBody.addEventListener('click', e => {
+    if (e.target.classList.contains('action-btn')) {
+      const index = e.target.getAttribute('data-index');
+      exams.splice(index, 1);
+      saveExams();
+      renderTable();
+    }
+  });
+
+  // Initial render
+  renderTable();
+</script>
+
+</body>
+</html>

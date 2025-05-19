@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rojan Giri School - School Management System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
+      background: #f9fafb;
+      color: #333;
+      line-height: 1.6;
+    }
+    a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Header */
+    header {
+      background: #34495e;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo-container img {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: contain;
+      border: 2px solid #ecf0f1;
+      background: white;
+    }
+    .school-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #ecf0f1;
+      user-select: none;
+    }
+    nav a {
+      margin-left: 25px;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+    .contact-info {
+      font-size: 0.9rem;
+      color: #ecf0f1aa;
+      font-weight: 400;
+      user-select: none;
+    }
+
+    /* Section common styles */
+    section {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
+      background: white;
+    }
+    section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #2c3e50;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    section p {
+      max-width: 900px;
+      margin: 0 auto 30px;
+      font-size: 1.1rem;
+      color: #555;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Banner style */
+    .banner {
+      position: relative;
+      height: 280px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center center;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+    .banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      border-radius: 10px;
+    }
+    .banner-text {
+      position: absolute;
+      bottom: 20px;
+      left: 30px;
+      color: white;
+      font-size: 1.6rem;
+      font-weight: 700;
+      z-index: 1;
+      max-width: 70%;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+    }
+
+    /* Features grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 30px;
+      margin-top: 10px;
+    }
+    .feature-box {
+      padding: 20px;
+      border-radius: 8px;
+      background: #f1f5f8;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+      text-align: center;
+    }
+    .feature-box:hover {
+      background: #d6e9ff;
+    }
+    .feature-box i {
+      font-size: 40px;
+      color: #2980b9;
+      margin-bottom: 12px;
+    }
+    .feature-box h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: #34495e;
+    }
+    .feature-box p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    footer {
+      background: #34495e;
+      color: #ecf0f1;
+      text-align: center;
+      padding: 25px 10px;
+      font-size: 0.95rem;
+      margin-top: 80px;
+      user-select: none;
+    }
+    footer a {
+      color: #bdc3c7;
+    }
+    footer a:hover {
+      color: #ecf0f1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      section {
+        margin: 40px 15px;
+      }
+      .banner-text {
+        font-size: 1.3rem;
+        max-width: 90%;
+        left: 15px;
+        bottom: 15px;
+      }
+      nav a {
+        margin-left: 15px;
+        font-size: 0.9rem;
+      }
+      .contact-info {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <img src="images/logo.png" alt="Rojan Giri School Logo" />
+    <div class="school-name">Rojan Giri School</div>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="admission-form.html">Admission</a>
+    <a href="login.html">Login</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="contact-info">
+    Kathmandu, Nepal<br />
+    Phone: +977 9868-156268<br />
+    Email: info@rojangiri.school
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section aria-label="Welcome to Rojan Giri School">
+  <div class="banner" style="background-image: url('images/hero-school.jpg');">
+    <div class="banner-text">Welcome to Rojan Giri School Management System</div>
+  </div>
+  <p>Your complete platform for managing admissions, attendance, fees, exams, and communications seamlessly.</p>
+</section>
+
+<!-- User Management -->
+<section aria-label="User Management Features">
+  <div class="banner" style="background-image: url('images/user-management.jpg');">
+    <div class="banner-text">User Management & Role Based Access</div>
+  </div>
+  <p>Securely manage Admin, Teacher, Student, and Parent accounts with customized access and permissions.</p>
+  <div class="features-grid">
+    <div class="feature-box">
+      <i class="fas fa-user-shield"></i>
+      <h3>Role-Based Access Control</h3>
+      <p>Each user role has specific privileges and access to features.</p>
+    </div>
+    <div class="feature-box">
+      <i class="fas fa-sign-in-alt"></i>
+      <h3>Secure Login & Registration</h3>
+      <p>Robust authentication system for all users with password reset capabilities.</p>
+    </div>
+    <div class="feature-box">
+      <i class="fas fa-user-edit"></i>
+      <h3>Profile Management</h3>
+      <p>Users can update their profiles, and admins can manage user data efficiently.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Student Information System -->
+<section aria-label="Student Information System">
+  <div class="banner" style="background-image: url('images/student-info.jpg');">
+    <div class="banner-text">Student Information System</div>
+  </div>
+  <p>Comprehensive student profiles, attendance tracking, academic records, and more.</p>
+  <div class="features-grid">
+    <div
+class="feature-box">
+<i class="fas fa-id-card"></i>
+<h3>Student Profiles</h3>
+<p>Maintain detailed profiles with personal and academic information.</p>
+</div>
+<div class="feature-box">
+<i class="fas fa-calendar-check"></i>
+<h3>Attendance Tracking</h3>
+<p>Record daily attendance with reports and alerts for low attendance.</p>
+</div>
+<div class="feature-box">
+<i class="fas fa-file-alt"></i>
+<h3>Academic History</h3>
+<p>Track student grades, results, and progress over the years.</p>
+</div>
+
+</div> </section> <!-- Fee Management --> <section aria-label="Fee Management System"> <div class="banner" style="background-image: url('images/fee-management.jpg');"> <div class="banner-text">Fee Management System</div> </div> <p>Manage fees by class, payment history, reminders, and online payment integration.</p> <div class="features-grid"> <div class="feature-box"> <i class="fas fa-money-bill-wave"></i> <h3>Class-wise Fee Structure</h3> <p>Automated fees based on student class and additional charges.</p> </div> <div class="feature-box"> <i class="fas fa-receipt"></i> <h3>Invoice & Payment Tracking</h3> <p>Generate invoices, track payments, and send reminders.</p> </div> <div class="feature-box"> <i class="fas fa-credit-card"></i> <h3>Online Payment Gateway</h3> <p>Integrate secure payment methods for convenient fee submission.</p> </div> </div> </section> <!-- Exams & Results --> <section aria-label="Exam and Result Management"> <div class="banner" style="background-image: url('images/exam-results.jpg');"> <div class="banner-text">Exam Scheduling & Result Publishing</div> </div> <p>Setup exams, enter marks, publish results, and generate report cards efficiently.</p> <div class="features-grid"> <div class="feature-box"> <i class="fas fa-calendar-alt"></i> <h3>Exam Scheduling</h3> <p>Plan and manage exam dates for all classes and subjects.</p> </div> <div class="feature-box"> <i class="fas fa-pen-nib"></i> <h3>Mark Entry</h3> <p>Teachers can easily enter and update student marks.</p> </div> <div class="feature-box"> <i class="fas fa-file-invoice"></i> <h3>Report Cards</h3> <p>Generate printable reports with grades and remarks.</p> </div> </div> </section> <footer> <p>© 2025 Rojan Giri School - Kathmandu, Nepal | Phone: +977 9868-156268 | Email: info@rojangiri.school</p> <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p> </footer> </body> </html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Question Bank - Rojan Giri School</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f9fafb;
+    margin: 0; padding: 20px;
+    color: #333;
+  }
+  header {
+    background: #004080;
+    color: white;
+    padding: 15px 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  main {
+    max-width: 900px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  h2 {
+    color: #004080;
+  }
+  input[type="file"] {
+    margin: 15px 0;
+  }
+  .file-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .file-item {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    position: relative;
+    background: #f0f4ff;
+    word-break: break-word;
+  }
+  .file-item img {
+    max-width: 100%;
+    max-height: 120px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+  .file-name {
+    margin-top: 8px;
+    font-size: 0.9rem;
+  }
+  .remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 18px;
+    font-size: 14px;
+  }
+  .remove-btn:hover {
+    background: #c9302c;
+  }
+  .pdf-link {
+    color: #004080;
+    text-decoration: none;
+    display: block;
+    margin-top: 5px;
+  }
+  .pdf-link:hover {
+    text-decoration: underline;
+  }
+  button.clear-all {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #004080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  button.clear-all:hover {
+    background: #003366;
+  }
+</style>
+</head>
+<body>
+
+<header>Rojan Giri School - Question Bank Management</header>
+
+<main>
+  <h2>Upload Question Bank Files</h2>
+  <p>You can upload PDF, PNG, and JPEG files.</p>
+  <input type="file" id="file-input" multiple accept=".pdf,image/png,image/jpeg" />
+  
+  <div class="file-list" id="file-list">
+    <!-- Uploaded files preview/list here -->
+  </div>
+
+  <button class="clear-all" id="clear-btn" style="display:none;">Clear All Files</button>
+</main>
+
+<script>
+  const STORAGE_KEY = 'questionBankFiles';
+  const fileInput = document.getElementById('file-input');
+  const fileList = document.getElementById('file-list');
+  const clearBtn = document.getElementById('clear-btn');
+
+  // Load saved files from localStorage or empty array
+  let filesData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+  function saveToStorage() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(filesData));
+  }
+
+  function renderFiles() {
+    fileList.innerHTML = '';
+    if (filesData.length === 0) {
+      clearBtn.style.display = 'none';
+      return;
+    }
+    clearBtn.style.display = 'inline-block';
+
+    filesData.forEach((fileObj, index) => {
+      const div = document.createElement('div');
+      div.classList.add('file-item');
+
+      const removeBtn = document.createElement('button');
+      removeBtn.classList.add('remove-btn');
+      removeBtn.innerText = '×';
+      removeBtn.title = 'Remove file';
+      removeBtn.onclick = () => {
+        filesData.splice(index, 1);
+        saveToStorage();
+        renderFiles();
+      };
+
+      div.appendChild(removeBtn);
+
+      if (fileObj.type.startsWith('image/')) {
+        const img = document.createElement('img');
+        img.src = fileObj.dataUrl;
+        img.alt = fileObj.name;
+        div.appendChild(img);
+
+        const name = document.createElement('div');
+        name.className = 'file-name';
+        name.textContent = fileObj.name;
+        div.appendChild(name);
+      } else if (fileObj.type === 'application/pdf') {
+        const pdfIcon = document.createElement('div');
+        pdfIcon.innerHTML = '📄';
+        pdfIcon.style.fontSize = '48px';
+        div.appendChild(pdfIcon);
+
+        const link = document.createElement('a');
+        link.href = fileObj.dataUrl;
+        link.download = fileObj.name;
+        link.textContent = fileObj.name;
+        link.className = 'pdf-link';
+        div.appendChild(link);
+      }
+
+      fileList.appendChild(div);
+    });
+  }
+
+  fileInput.addEventListener('change', e => {
+    const files = Array.from(e.target.files);
+
+    files.forEach(file => {
+      if (!['application/pdf', 'image/png', 'image/jpeg'].includes(file.type)) {
+        alert('Only PDF, PNG, and JPEG files are allowed.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        // Check file size - localStorage max ~5MB, limit per file to 2MB here
+        if (file.size > 2 * 1024 * 1024) {
+          alert(`File ${file.name} is too large (max 2MB). Skipped.`);
+          return;
+        }
+
+        filesData.push({
+          name: file.name,
+          type: file.type,
+          dataUrl: ev.target.result
+        });
+        saveToStorage();
+        renderFiles();
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // Reset input to allow same file upload again if needed
+    fileInput.value = '';
+  });
+
+  clearBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear all uploaded files?')) {
+      filesData = [];
+      saveToStorage();
+      renderFiles();
+    }
+  });
+
+  // Initial render
+  renderFiles();
+</script>
+
+</body>
+</html>

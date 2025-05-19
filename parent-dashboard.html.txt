@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Parent Dashboard - Rojan Giri School</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 0;
+      background: #f4f7fc;
+      color: #333;
+    }
+    header {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header img {
+      height: 50px;
+    }
+    header h1 {
+      margin: 0 0 0 1rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+      flex-grow: 1;
+    }
+    nav {
+      font-size: 0.9rem;
+    }
+    nav a {
+      color: #ecf0f1;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #3498db;
+    }
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 0.5rem;
+    }
+    section {
+      background: white;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgb(0 0 0 / 0.1);
+    }
+    .flex-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .child-info {
+      flex: 1 1 250px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .child-info img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #3498db;
+    }
+    .child-details h3 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: #2980b9;
+    }
+    .child-details p {
+      margin: 0.25rem 0 0 0;
+      font-weight: 600;
+      color: #666;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 0.7rem;
+      text-align: left;
+    }
+    th {
+      background: #3498db;
+      color: white;
+    }
+    .status {
+      font-weight: 700;
+      padding: 0.25rem 0.5rem;
+      border-radius: 5px;
+      color: white;
+      display: inline-block;
+      font-size: 0.9rem;
+    }
+    .pending { background-color: #e67e22; }
+    .submitted { background-color: #27ae60; }
+    .graded { background-color: #2980b9; }
+    .overdue { background-color: #c0392b; }
+    .notification {
+      background: #f39c12;
+      color: white;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      font-weight: 600;
+      display: inline-block;
+      font-size: 0.9rem;
+    }
+    .btn {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-size: 1rem;
+      margin-top: 1rem;
+      display: inline-block;
+      text-decoration: none;
+      text-align: center;
+    }
+    .btn:hover {
+      background: #2980b9;
+    }
+    .chart-placeholder {
+      background: #ecf0f1;
+      border: 2px dashed #3498db;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7f8c8d;
+      font-weight: 600;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+    @media (max-width: 768px) {
+      .flex-row {
+        flex-direction: column;
+      }
+      .child-info {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/logo.png" alt="Rojan Giri School Logo" />
+    <h1>Rojan Giri School - Parent Portal</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="logout.html">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Dashboard Overview -->
+    <section>
+      <h2>Dashboard Overview</h2>
+      <div class="flex-row">
+        <div class="child-info">
+          <img src="images/student1.jpg" alt="Child Photo" />
+          <div class="child-details">
+            <h3>Arjun Giri</h3>
+            <p>Class: 7</p>
+          </div>
+        </div>
+        <div style="flex: 2 1 400px;">
+          <p><strong>Current Academic Performance:</strong> Good standing with all subjects above 75%</p>
+          <p><strong>Today's Schedule:</strong> Math, Science, English, History</p>
+          <p><strong>Attendance Summary (May 2025):</strong> 28/30 days present (93%)</p>
+          <p><strong>Latest Announcements:</strong> School will be closed on May 25 for a public holiday.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Academic Progress -->
+    <section>
+      <h2>Academic Progress</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Grade</th>
+            <th>Teacher Feedback</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mathematics</td>
+            <td>A-</td>
+            <td>Excellent problem-solving skills</td>
+          </tr>
+          <tr>
+            <td>Science</td>
+            <td>B+</td>
+            <td>Needs improvement in lab work</td>
+          </tr>
+          <tr>
+            <td>English</td>
+            <td>A</td>
+            <td>Very good writing skills</td>
+          </tr>
+          <tr>
+            <td>History</td>
+            <td>B</td>
+            <td>Participates actively in class</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="#" class="btn">Download Progress Report</a>
+      <div class="chart-placeholder">Subject-wise Performance Chart (Placeholder)</div>
+    </section>
+
+    <!-- Attendance Tracking -->
+    <section>
+      <h2>Attendance Tracking</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>May 1, 2025</td><td class="status submitted">Present</td></tr>
+          <tr><td>May 2, 2025</td><td class="status submitted">Present</td></tr>
+          <tr><td>May 3, 2025</td><td class="status overdue">Absent</td></tr>
+          <tr><td>May 4, 2025</td><td class="status submitted">Present</td></tr>
+          <tr><td>May 5, 2025</td><td class="status submitted">Present</td></tr>
+          <!-- More rows as needed -->
+        </tbody>
+      </table>
+      <div class="chart-placeholder">Attendance Percentage Visualization</div>
+    </section>
+
+    <!-- Announcements -->
+    <section>
+      <h2>Announcements</h2>
+      <ul>
+        <li>May 20, 2025: Parent-teacher meeting scheduled for May 27.</li>
+        <li>May 18, 2025: New library books have arrived.</li>
+        <li>May 15, 2025: Summer vacation starts June 1.</li>
+      </ul>
+    </section>
+
+    <!-- Fee Status -->
+    <section>
+      <h2>Fee Status</h2>
+      <p><strong>Payment History:</strong></p>
+      <ul>
+        <li>April 2025 - Paid</li>
+        <li>May 2025 - Pending <span class="notification">Due Soon</span></li>
+      </ul>
+      <p><strong>Upcoming Due Dates:</strong> May 30, 2025</p>
+      <a href="#" class="btn">Download Payment Slips</a>
+    </section>
+
+    <!-- Communication with Teachers -->
+    <section>
+      <h2>Communication with Teachers</h2>
+      <p>You can message or contact your child’s teachers here.</p>
+      <form onsubmit="alert('Message sent! (Simulation)'); return false;">
+        <label for="teacher-select">Select Teacher:</label>
+        <select id="teacher-select" required>
+          <option value="">-- Choose --</option>
+          <option>Mrs. Sharma - Math</option>
+          <option>Mr. Joshi - Science</option>
+          <option>Ms. Singh - English</option>
+          <option>Mr. Rai - History</option>
+        </select><br /><br />
+        <textarea placeholder="Write your message here..." rows="4" required style="width:100%;"></textarea><br /><br />
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </section>
+
+    <!-- View Assignments -->
+    <section>
+      <h2>Assignments</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Assignment</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Math</td>
+            <td>Algebra Worksheet</td>
+            <td>May 25, 2025</td>
+            <td class="status pending">Pending</td>
+            <td><a href="#">Download</a></td>
+          </tr>
+          <tr>
+            <td>Science</td>
+            <td>Lab Report</td>
+            <td>May 27, 2025</td>
+            <td class="status submitted">Submitted</td>
+            <td><a href="#">Download</a></td>
+          </tr>
+          <tr>
+            <td>English</td>
+            <td>Essay on Nature</td>
+            <td>May 29, 2025</
+
+
+
+
+
+ChatGPT said:
+td>
+<td class="status graded">Graded</td>
+<td><a href="#">Download</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+php-template
+Copy
+Edit
+<!-- Exam Schedule & Results -->
+<section>
+  <h2>Exam Schedule & Results</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Exam</th>
+        <th>Date</th>
+        <th>Syllabus</th>
+        <th>Duration</th>
+        <th>Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mid-term</td>
+        <td>June 10, 2025</td>
+        <td>Math, Science, English, History</td>
+        <td>3 hours</td>
+        <td>89 / 100</td>
+      </tr>
+      <tr>
+        <td>Final</td>
+        <td>September 20, 2025</td>
+        <td>All Subjects</td>
+        <td>4 hours</td>
+        <td> - </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Profile & Settings -->
+<section>
+  <h2>Profile & Settings</h2>
+  <p><strong>Name:</strong> Sita Giri</p>
+  <p><strong>Email:</strong> sita.giri@example.com</p>
+  <form onsubmit="alert('Profile updated (Simulation)'); return false;">
+    <label for="profile-photo">Upload Profile Photo:</label><br />
+    <input type="file" id="profile-photo" accept="image/*" /><br /><br />
+    <label for="change-password">Change Password:</label><br />
+    <input type="password" id="change-password" placeholder="New Password" /><br /><br />
+    <button type="submit" class="btn">Update Profile</button>
+  </form>
+</section>
+</main> <script> // Simulate acknowledging announcements read status const announcements = document.querySelectorAll('section:nth-child(4) ul li'); announcements.forEach((item) => { item.style.cursor = 'pointer'; item.title = "Click to acknowledge"; item.addEventListener('click', () => { item.style.textDecoration = 'line-through'; alert('Announcement acknowledged!'); }); }); // Notification badge simulation const nav = document.querySelector('nav'); const notif = document.createElement('span'); notif.textContent = '3'; notif.style.background = '#e74c3c'; notif.style.color = '#fff'; notif.style.borderRadius = '50%'; notif.style.padding = '0 8px'; notif.style.marginLeft = '8px'; notif.style.fontSize = '0.8rem'; notif.style.verticalAlign = 'middle'; nav.querySelector('a[href="index.html"]').appendChild(notif); </script> </body> </html> ```

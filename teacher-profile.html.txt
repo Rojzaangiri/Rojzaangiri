@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teacher Profile</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f7fc;
+      margin: 0; padding: 0;
+      color: #333;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    main {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    }
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #27ae60;
+      display: block;
+      margin: 0 auto 1.5rem auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #27ae60;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 2rem;
+      background: #27ae60;
+      border: none;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background: #219150;
+    }
+  </style>
+</head>
+<body>
+  <header>Teacher Profile</header>
+  <main>
+    <img src="images/teacher1.jpg" alt="Teacher Photo" class="profile-photo" />
+    <h2>Mrs. Sita Sharma</h2>
+    <form onsubmit="alert('Profile updated! (Simulation)'); return false;">
+      <label for="teacher-name">Full Name</label>
+      <input type="text" id="teacher-name" value="Sita Sharma" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" value="sita.sharma@example.com" required />
+
+      <label for="subject">Subject Taught</label>
+      <select id="subject" required>
+        <option value="Math" selected>Math</option>
+        <option value="Science">Science</option>
+        <option value="English">English</option>
+        <option value="History">History</option>
+      </select>
+
+      <label for="contact">Contact Number</label>
+      <input type="text" id="contact" value="+977 9868765432" />
+
+      <button type="submit">Update Profile</button>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>School Timetable - Rojan Giri School</title>
+<style>
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #f0f4f8;
+    margin: 0; padding: 20px;
+    color: #2c3e50;
+  }
+
+  h1 {
+    color: #e67e22;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  th {
+    background: #e67e22;
+    color: white;
+  }
+
+  td.subject {
+    font-weight: 700;
+    color: #34495e;
+  }
+
+  form {
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  form label {
+    display: block;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+
+  form select, form input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.8px solid #dcdfe3;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #2c3e50;
+  }
+
+  form button {
+    margin-top: 20px;
+    background: #e67e22;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 7px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 6px 12px rgba(230, 126, 34, 0.6);
+    transition: background 0.3s ease;
+  }
+  form button:hover {
+    background: #d66f1c;
+  }
+</style>
+</head>
+<body>
+
+  <h1>Weekly Class Timetable - Admin Panel</h1>
+
+  <table id="timetable">
+    <thead>
+      <tr>
+        <th>Day \ Period</th>
+        <th>Period 1</th>
+        <th>Period 2</th>
+        <th>Period 3</th>
+        <th>Period 4</th>
+        <th>Period 5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Monday</td>
+        <td class="subject">Math<br/><small>Mr. Sharma</small></td>
+        <td class="subject">English<br/><small>Ms. Karki</small></td>
+        <td class="subject">Science<br/><small>Mr. Singh</small></td>
+        <td class="subject">Nepali<br/><small>Ms. Rai</small></td>
+        <td class="subject">Art<br/><small>Ms. Lama</small></td>
+      </tr>
+      <tr>
+        <td>Tuesday</td>
+        <td class="subject">Science<br/><small>Mr. Singh</small></td>
+        <td class="subject">Math<br/><small>Mr. Sharma</small></td>
+        <td class="subject">Social<br/><small>Ms. Shrestha</small></td>
+        <td class="subject">English<br/><small>Ms. Karki</small></td>
+        <td class="subject">Music<br/><small>Mr. Joshi</small></td>
+      </tr>
+      <tr>
+        <td>Wednesday</td>
+        <td class="subject">English<br/><small>Ms. Karki</small></td>
+        <td class="subject">Math<br/><small>Mr. Sharma</small></td>
+        <td class="subject">Science<br/><small>Mr. Singh</small></td>
+        <td class="subject">Nepali<br/><small>Ms. Rai</small></td>
+        <td class="subject">PE<br/><small>Coach Rana</small></td>
+      </tr>
+      <tr>
+        <td>Thursday</td>
+        <td class="subject">Social<br/><small>Ms. Shrestha</small></td>
+        <td class="subject">Math<br/><small>Mr. Sharma</small></td>
+        <td class="subject">English<br/><small>Ms. Karki</small></td>
+        <td class="subject">Science<br/><small>Mr. Singh</small></td>
+        <td class="subject">Art<br/><small>Ms. Lama</small></td>
+      </tr>
+      <tr>
+        <td>Friday</td>
+        <td class="subject">Math<br/><small>Mr. Sharma</small></td>
+        <td class="subject">Science<br/><small>Mr. Singh</small></td>
+        <td class="subject">English<br/><small>Ms. Karki</small></td>
+        <td class="subject">Social<br/><small>Ms. Shrestha</small></td>
+        <td class="subject">Music<br/><small>Mr. Joshi</small></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form id="updateForm">
+    <h2>Update Timetable Entry</h2>
+
+    <label for="day">Day</label>
+    <select id="day" required>
+      <option value="" disabled selected>Select day</option>
+      <option>Monday</option>
+      <option>Tuesday</option>
+      <option>Wednesday</option>
+      <option>Thursday</option>
+      <option>Friday</option>
+    </select>
+
+    <label for="period">Period</label>
+    <select id="period" required>
+      <option value="" disabled selected>Select period</option>
+      <option value="1">Period 1</option>
+      <option value="2">Period 2</option>
+      <option value="3">Period 3</option>
+      <option value="4">Period 4</option>
+      <option value="5">Period 5</option>
+    </select>
+
+    <label for="subject">Subject</label>
+    <input type="text" id="subject" placeholder="Subject name" required />
+
+    <label for="teacher">Teacher</label>
+    <input type="text" id="teacher" placeholder="Teacher name" required />
+
+    <button type="submit">Update Timetable</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('updateForm');
+    const timetable = document.getElementById('timetable').getElementsByTagName('tbody')[0];
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const day = form.day.value;
+      const period = parseInt(form.period.value);
+      const subject = form.subject.value.trim();
+      const teacher = form.teacher.value.trim();
+
+      if (!days.includes(day) || period < 1 || period > 5) {
+        alert('Please select a valid day and period.');
+        return;
+      }
+
+      // Find row index by day
+      const rowIndex = days.indexOf(day);
+      // Get row cells, period+1 because first cell is day name
+      const cell = timetable.rows[rowIndex].cells[period];
+
+      // Update timetable cell
+      cell.innerHTML = `<span class="subject">${subject}<br/><small>${teacher}</small></span>`;
+
+      // Reset form
+      form.reset();
+      alert(`Timetable updated for ${day}, Period ${period}`);
+    });
+  </script>
+
+</body>
+</html>

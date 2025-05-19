@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Profile</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f7fc;
+      margin: 0; padding: 0;
+      color: #333;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    main {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    }
+    .profile-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #3498db;
+      display: block;
+      margin: 0 auto 1.5rem auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #2980b9;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 2rem;
+      background: #3498db;
+      border: none;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <header>Student Profile</header>
+  <main>
+    <img src="images/student1.jpg" alt="Student Photo" class="profile-photo" />
+    <h2>Arjun Giri</h2>
+    <form onsubmit="alert('Profile updated! (Simulation)'); return false;">
+      <label for="student-name">Full Name</label>
+      <input type="text" id="student-name" value="Arjun Giri" required />
+
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" value="2012-04-15" required />
+
+      <label for="class">Class</label>
+      <select id="class" required>
+        <option value="7" selected>7</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+      </select>
+
+      <label for="address">Address</label>
+      <input type="text" id="address" value="Nawalpur-14, Hetauda" />
+
+      <label for="contact">Contact Number</label>
+      <input type="text" id="contact" value="+977 9868123456" />
+
+      <button type="submit">Update Profile</button>
+    </form>
+  </main>
+</body>
+</html>
