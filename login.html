@@ -88,8 +88,8 @@
         <option value="student">Student</option>
         <option value="parent">Parent</option>
       </select>
-      <input type="email" id="email" placeholder="Enter your Email" required autocomplete="username" />
-      <input type="password" id="password" placeholder="Enter your Password" required autocomplete="current-password" />
+      <input type="email" id="email" placeholder="Enter your Email" required />
+      <input type="password" id="password" placeholder="Enter your Password" required />
       <button type="submit">Login</button>
     </form>
     <div class="login-footer">
@@ -98,14 +98,8 @@
     </div>
   </div>
 
+  <!-- ✅ JavaScript Section -->
   <script>
-    const users = [
-      { email: "admin@gmail.com", password: "admin123", role: "admin", name: "Admin" },
-      { email: "teacher@gmail.com", password: "teacher123", role: "teacher", name: "Teacher" },
-      { email: "student@gmail.com", password: "student123", role: "student", name: "Student" },
-      { email: "parent@gmail.com", password: "parent123", role: "parent", name: "Parent" }
-    ];
-
     document.getElementById("loginForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
@@ -113,29 +107,54 @@
       const password = document.getElementById("password").value;
       const role = document.getElementById("role").value;
 
-      const user = users.find(
-        u => u.email === email && u.password === password && u.role === role
-      );
+      // Dummy user data
+      const users = {
+        "admin@gmail.com": { password: "admin123", role: "admin", name: "Admin" },
+        "teacher@gmail.com": { password: "teacher123", role: "teacher", name: "Teacher" },
+        "student@gmail.com": { password: "student123", role: "student", name: "Student" },
+        "parent@gmail.com": { password: "parent123", role: "parent", name: "Parent" }
+      };
 
-      if (user) {
-        localStorage.setItem("loggedInUser", JSON.stringify(user));
+      if (!users[email]) {
+        alert("Email not found.");
+        return;
+      }
 
-        switch (user.role) {
-          case "admin":
-            window.location.href = "admin-dashboard.html";
-            break;
-          case "teacher":
-            window.location.href = "teacher-dashboard.html";
-            break;
-          case "student":
-            window.location.href = "student-dashboard.html";
-            break;
-          case "parent":
-            window.location.href = "parent-dashboard.html";
-            break;
-        }
-      } else {
-        alert("Invalid email, password, or role. Please try again.");
+      if (users[email].password !== password) {
+        alert("Incorrect password!");
+        return;
+      }
+
+      if (users[email].role !== role) {
+        alert("Role mismatch. Please select the correct role.");
+        return;
+      }
+
+      // Save login data in localStorage
+      const userData = {
+        email: email,
+        role: role,
+        name: users[email].name
+      };
+
+      localStorage.setItem("loggedInUser", JSON.stringify(userData));
+
+      // Redirect based on role
+      switch (role) {
+        case "admin":
+          window.location.href = "admin-dashboard.html";
+          break;
+        case "teacher":
+          window.location.href = "teacher-dashboard.html";
+          break;
+        case "student":
+          window.location.href = "student-dashboard.html";
+          break;
+        case "parent":
+          window.location.href = "parent-dashboard.html";
+          break;
+        default:
+          alert("Invalid role.");
       }
     });
   </script>
